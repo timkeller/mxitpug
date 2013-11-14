@@ -19,25 +19,25 @@ def getPug():
 
     # Ensure the file size is below 100kb
     if not pug_url in pug_file_sizes.keys():
-    	filename = "/tmp/"+hashlib.sha224(pug_url).hexdigest()
-    	with open(filename, 'wb') as handle:
-    	    response = requests.get(pug_url)
+        filename = "/tmp/"+hashlib.sha224(pug_url).hexdigest()
+        with open(filename, 'wb') as handle:
+            response = requests.get(pug_url)
 
-    	    for block in response.iter_content(1024):
-    	        if not block:
-    	            break
+            for block in response.iter_content(1024):
+                if not block:
+                    break
 
-    	        handle.write(block)
+                handle.write(block)
 
-    	pug_file_sizes[pug_url] = os.stat(filename).st_size
-    	os.remove(filename)
+        pug_file_sizes[pug_url] = os.stat(filename).st_size
+        os.remove(filename)
 
-	if pug_file_sizes[pug_url] < 100000:
+    if pug_file_sizes[pug_url] < 100000:
         print "File Size OK: %s is %s bytes" % (pug_url, pug_file_sizes[pug_url])
-		return pug_url
-	else:
-		print "File Too large: %s is %s bytes" % (pug_url, pug_file_sizes[pug_url])
-		return getPug()
+        return pug_url
+    else:
+        print "File Too large: %s is %s bytes" % (pug_url, pug_file_sizes[pug_url])
+        return getPug()
 
 @app.route("/")
 def index():
