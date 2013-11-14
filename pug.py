@@ -33,6 +33,7 @@ def getPug():
     	os.remove(filename)
 
 	if pug_file_sizes[pug_url] < 100000:
+        print "File Size OK: %s is %s bytes" % (pug_url, pug_file_sizes[pug_url])
 		return pug_url
 	else:
 		print "File Too large: %s is %s bytes" % (pug_url, pug_file_sizes[pug_url])
